@@ -60,6 +60,7 @@ HEADERS += \
     modelmenu.h \
     networkaccessmanager.h \
     plaintexteditsearch.h \
+    rssbutton.h \
     searchbar.h \
     searchlineedit.h \
     settings.h \
@@ -89,6 +90,7 @@ SOURCES += \
     modelmenu.cpp \
     networkaccessmanager.cpp \
     plaintexteditsearch.cpp \
+    rssbutton.cpp \
     searchbar.cpp \
     searchlineedit.cpp \
     settings.cpp \

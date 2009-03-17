@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Benjamin C. Meyer <ben@meyerhome.net>
+ * Copyright 2009 Benjamin C. Meyer <ben@meyerhome.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,45 +17,48 @@
  * Boston, MA  02110-1301  USA
  */
 
-#ifndef LOCATIONBAR_H
-#define LOCATIONBAR_H
+#ifndef RSSBUTTON_H
+#define RSSBUTTON_H
 
-#include "lineedit.h"
+#include <qabstractbutton.h>
 
-#include <qpointer.h>
 #include <qurl.h>
 
+class Feed {
+public:
+    Feed(const QString &t, const QString &h)
+        :title(t), href(h) {}
+    QString title;
+    QString href;
+};
+
+class QWebPage;
 class WebView;
-class QLabel;
-class LocationBarSiteIcon;
-class RssButton;
-class LocationBar : public LineEdit
+class RssButton : public QAbstractButton
 {
     Q_OBJECT
 
-public:
-    LocationBar(QWidget *parent = 0);
-    void setWebView(WebView *webView);
-    WebView *webView() const;
+//signals:
+//    void openUrl(const QUrl &url, const QString &title);
 
-public slots:
-    void setPrivate(bool isPrivate);
+public:
+    RssButton(QWidget *parent = 0);
+    void setWebView(WebView *webView);
+    void paintEvent(QPaintEvent *event);
 
 protected:
-    void paintEvent(QPaintEvent *event);
-    void focusOutEvent(QFocusEvent *event);
-    void mouseDoubleClickEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
 private slots:
-    void webViewUrlChanged(const QUrl &url);
+    void loadFinished(bool ok);
+    void triggeredAction();
 
 private:
-    QPointer<WebView> m_webView;
-    LocationBarSiteIcon *m_siteIcon;
-    RssButton *m_rssButton;
-    QColor m_defaultBaseColor;
-    QLabel *m_privacyIndicator;
+    QList<Feed> m_feeds;
+    QString m_script;
+    QWebPage *m_webPage;
+
 };
 
-#endif // LOCATIONBAR_H
+#endif // RSSBUTTON_H
 
