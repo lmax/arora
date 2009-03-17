@@ -102,7 +102,7 @@ BrowserApplication::BrowserApplication(int &argc, char **argv)
                     .arg(QLatin1String(GITVERSION));
 
     QCoreApplication::setApplicationVersion(version);
-#ifndef AUTOTESTS
+#ifdef AUTOTESTS
     QStringList args = QCoreApplication::arguments();
     QString message = (args.count() > 1) ? args.last() : QString();
     if (sendMessage(message))
